@@ -34,5 +34,20 @@ export const allAnime=async()=>{
   }
 }
 
+export const animeDetail=async(id)=>{
+  const url=`https://api.jikan.moe/v4/anime/${id}/full`
+  const options={
+    method:"GET"
+  }
+
+  try{
+    const response=await fetch(url,options)
+    const result=response.json()
+    return result
+    }catch(error){
+      console.error("Cannot fetch details", error)
+    }
+}
+
 
 

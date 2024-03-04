@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { searchTitle, allAnime } from "../apiList";
+import { searchTitle, allAnime, animeDetail } from "../apiList";
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
+import { useNavigate, Link } from 'react-router-dom';
 import {
   Pagination,
   PaginationContent,
@@ -11,17 +12,19 @@ import {
 } from "@/components/ui/pagination";
 import {
   NavigationMenu,
-  NavigationMenuContent,
+  // NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
+  // NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
+  // NavigationMenuTrigger,
+  // navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 
 const Home = () => {
   const [allSearchData, setAllSearchData] = useState([]);
   const [allAnimeData, setAllAnimeData] = useState([]);
+  const [anime, setAnime] = useState('');
+  const nav = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -33,6 +36,16 @@ const Home = () => {
   const fetchAllAnime = async () => {
     const data = await allAnime();
     setAllAnimeData(data);
+  }
+
+  const animeDet = async (id) => {
+    try {
+      const result = await animeDetail(id);
+      setAnime(result)
+      nav("/detail", { state: { data: result } })
+    } catch (error) {
+      console.error("error while fetching detail", error)
+    }
   }
 
   useEffect(() => {
@@ -50,12 +63,12 @@ const Home = () => {
       <div className='bg-[#040f13] h-[50px]'>
         <NavigationMenu >
           <NavigationMenuList>
-          <NavigationMenuItem>
-          <img className=' mr-[10px] h-[50px] w-[25px]' src="src/assets/logo-transparent.png"/>
-          </NavigationMenuItem>
+            <NavigationMenuItem>
+              <img className=' mr-[10px] h-[50px] w-[25px]' src="src/assets/logo-transparent.png" />
+            </NavigationMenuItem>
             <NavigationMenuItem className='p-[12px] font-["Times"] hover:text-white hover:cursor-pointer text-gray-400 text-[16px]'>Top Anime</NavigationMenuItem>
-            <NavigationMenuItem>Ocean</NavigationMenuItem>
-            </NavigationMenuList>
+            <NavigationMenuItem className='text-white'>Ocean</NavigationMenuItem>
+          </NavigationMenuList>
         </NavigationMenu>
       </div>
       <div className="bg-hero-pattern bg-center bg-cover bg-fixed flex justify-center items-center	pt-[20px]">
@@ -63,7 +76,9 @@ const Home = () => {
           <div className="flex flex-wrap justify-content justify-center pt-[25px] ">
             {allSearchData.data?.map((item, index) => {
               return (
-                <Card className="w-[220px] h-[333px] mx-4 mb-10 bg-transparent border-none opacity-85 hover:opacity-100 hover:cursor-pointer">
+                
+                
+                <Card onClick={() => animeDet(item?.mal_id)} className="w-[220px] h-[333px] mx-4 mb-10 bg-transparent border-none opacity-85 hover:opacity-100 hover:cursor-pointer">
                   <CardDescription key={index} className="p-0 rounded-md">
                     {" "}
                     <img
