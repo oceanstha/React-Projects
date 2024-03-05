@@ -1,4 +1,4 @@
-import React from "react";
+
 
 export const searchTitle = async (page) => {
 
@@ -47,6 +47,23 @@ export const animeDetail = async (id) => {
     return result
   } catch (error) {
     console.error("Cannot fetch details", error)
+  }
+}
+
+
+export const allManga=async(page)=>{
+
+  const url =`https://api.jikan.moe/v4/manga?page=${page}`
+  const options={
+    method:'GET',
+  }
+
+  try{
+    const response = await fetch(url, options)
+    const result =response.json()
+    return result
+  }catch(error){
+    console.error('Cannot fetch manga', error)
   }
 }
 
