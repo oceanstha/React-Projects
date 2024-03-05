@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { searchTitle, allAnime, animeDetail } from "../apiList";
-import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { useNavigate } from 'react-router-dom';
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuList,
+} from "@/components/ui/navigation-menu";
+import { allManga } from "../apiList";
+import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import {
   Pagination,
   PaginationContent,
@@ -10,74 +15,46 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu"
 
-const Home = () => {
+
+const Manga = () => {
+    
   const [allSearchData, setAllSearchData] = useState([]);
-  const [allAnimeData, setAllAnimeData] = useState([]);
-  const [anime, setAnime] = useState('');
-  const nav = useNavigate();
-
   const [currentPage, setCurrentPage] = useState(1);
+  const nav=useNavigate();
 
-  const fetchSearchAll = async (page) => {
-    const data = await searchTitle(page);
-    setAllSearchData(data);
+  const mangaGet = async (page) => {
+    const result = await allManga(page);
+    setAllSearchData(result);
   };
 
-  const fetchAllAnime = async () => {
-    const data = await allAnime();
-    setAllAnimeData(data);
-  }
-
-  const animeDet = async (id) => {
-    try {
-      const result = await animeDetail(id);
-      setAnime(result)
-      nav("/detail", { state: { data: result } })
-    } catch (error) {
-      console.error("error while fetching detail", error)
-    }
-  }
-
   useEffect(() => {
-    fetchSearchAll(currentPage);
-  }, [ ,currentPage]);
-
-  useEffect(() => {
-    fetchAllAnime();
-  }, [])
-
-  const manga=()=>{
-    nav("/manga")
-  }
-
+    mangaGet(currentPage);
+  },[ ,currentPage]);
 
   return (
     <div>
-      <div className='bg-[#040f13] h-[75px]'>
-        <NavigationMenu >
+      <div className="bg-[#040f13] h-[75px]">
+        <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem className='hover:cursor-pointer' onClick={()=>nav("/")}>
-              <img className='h-[75px] w-[75px]' src="src/assets/a1.png" />
+              <img className="h-[75px] w-[75px] " src="src/assets/a1.png" />
             </NavigationMenuItem>
-            <NavigationMenuItem className='pr-[20px] font-["Times"] hover:text-white hover:cursor-pointer text-gray-400 text-[16px]'>Top Anime</NavigationMenuItem>
-            <NavigationMenuItem onClick={manga} className='pr-[15px] font-["Times"] hover:text-white hover:cursor-pointer text-gray-400 text-[16px]'>Manga</NavigationMenuItem>
+            <NavigationMenuItem className='pr-[20px] font-["Times"] hover:text-white hover:cursor-pointer text-gray-400 text-[16px]'>
+              Top Anime
+            </NavigationMenuItem>
+            <NavigationMenuItem className='pr-[15px] font-["Times"] hover:text-white hover:cursor-pointer text-gray-400 text-[16px]'>
+              Manga
+            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
       </div>
-      
-
       <div className="bg-hero-pattern bg-center bg-cover bg-fixed flex justify-center items-center	pt-[20px]">
         <div className="h-[75%] w-[75%] backdrop-blur-sm">
           <div className="flex flex-wrap justify-content justify-center pt-[25px] ">
             {allSearchData.data?.map((item, index) => {
               return (
-                <Card onClick={() => animeDet(item?.mal_id)} className="w-[220px] h-[333px] mx-4 mb-10 bg-transparent border-none opacity-85 hover:opacity-100 hover:cursor-pointer">
+                <Card className="w-[220px] h-[333px] mx-4 mb-10 bg-transparent border-none opacity-85 hover:opacity-100 hover:cursor-pointer">
                   <CardDescription key={index} className="p-0 rounded-md">
                     {" "}
                     <img
@@ -127,4 +104,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Manga;

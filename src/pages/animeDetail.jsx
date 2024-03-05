@@ -1,38 +1,28 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   NavigationMenu,
-  // NavigationMenuContent,
   NavigationMenuItem,
-  // NavigationMenuLink,
   NavigationMenuList,
-  // NavigationMenuTrigger,
-  // navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
 
 const AnimeDetail = () => {
   const location = useLocation();
+  const nav = useNavigate();
   const result = location.state.data.data;
   console.log("result", result);
 
   return (
     <div>
-      <div className="bg-[#040f13] h-[50px]">
-        <NavigationMenu>
+      <div className='bg-[#040f13] h-[75px]'>
+        <NavigationMenu >
           <NavigationMenuList>
-            <NavigationMenuItem>
-              <img
-                className=" mr-[10px] h-[50px] w-[25px]"
-                src="src/assets/logo-transparent.png"
-              />
+            <NavigationMenuItem className='hover:cursor-pointer' onClick={()=>nav("/")}>
+              <img className='h-[75px] w-[75px]' src="src/assets/a1.png" />
             </NavigationMenuItem>
-            <NavigationMenuItem className='p-[12px] font-["Times"] hover:text-white hover:cursor-pointer text-gray-400 text-[16px]'>
-              Top Anime
-            </NavigationMenuItem>
-            <NavigationMenuItem className="text-white">
-              Ocean
-            </NavigationMenuItem>
+            <NavigationMenuItem className='pr-[20px] font-["Times"] hover:text-white hover:cursor-pointer text-gray-400 text-[16px]'>Top Anime</NavigationMenuItem>
+            <NavigationMenuItem onClick={()=>(nav('/manga'))} className='pr-[15px] font-["Times"] hover:text-white hover:cursor-pointer text-gray-400 text-[16px]'>Manga</NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
       </div>
