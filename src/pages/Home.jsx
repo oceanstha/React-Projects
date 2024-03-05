@@ -50,7 +50,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchSearchAll(currentPage);
-  }, [currentPage]);
+  }, [ ,currentPage]);
 
   useEffect(() => {
     fetchAllAnime();
@@ -60,14 +60,14 @@ const Home = () => {
 
   return (
     <div>
-      <div className='bg-[#040f13] h-[50px]'>
+      <div className='bg-[#040f13] h-[75px]'>
         <NavigationMenu >
           <NavigationMenuList>
             <NavigationMenuItem>
-              <img className=' mr-[10px] h-[50px] w-[25px]' src="src/assets/logo-transparent.png" />
+              <img className='h-[75px] w-[75px]' src="src/assets/a1.png" />
             </NavigationMenuItem>
-            <NavigationMenuItem className='p-[12px] font-["Times"] hover:text-white hover:cursor-pointer text-gray-400 text-[16px]'>Top Anime</NavigationMenuItem>
-            <NavigationMenuItem className='text-white'>Ocean</NavigationMenuItem>
+            <NavigationMenuItem className='pr-[20px] font-["Times"] hover:text-white hover:cursor-pointer text-gray-400 text-[16px]'>Top Anime</NavigationMenuItem>
+            <NavigationMenuItem className='pr-[15px] font-["Times"] hover:text-white hover:cursor-pointer text-gray-400 text-[16px]'>Manga</NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
       </div>
@@ -76,8 +76,6 @@ const Home = () => {
           <div className="flex flex-wrap justify-content justify-center pt-[25px] ">
             {allSearchData.data?.map((item, index) => {
               return (
-                
-                
                 <Card onClick={() => animeDet(item?.mal_id)} className="w-[220px] h-[333px] mx-4 mb-10 bg-transparent border-none opacity-85 hover:opacity-100 hover:cursor-pointer">
                   <CardDescription key={index} className="p-0 rounded-md">
                     {" "}
@@ -103,7 +101,7 @@ const Home = () => {
               <PaginationContent>
                 <PaginationItem>
                   <PaginationPrevious
-                    className="text-white"
+                    className="text-white hover:cursor-pointer"
                     href="#"
                     onClick={() => setCurrentPage(currentPage - 1)}
                   />
@@ -115,7 +113,7 @@ const Home = () => {
                 </PaginationItem>
                 <PaginationItem>
                   <PaginationNext
-                    className="text-white"
+                    className="text-white hover:cursor-pointer"
                     onClick={() => setCurrentPage(currentPage + 1)}
                   />
                 </PaginationItem>
