@@ -18,35 +18,36 @@ export const searchTitle = async (page) => {
 }
 
 
-export const allAnime=async()=>{
+export const allAnime = async () => {
 
-  const url="https://api.jikan.moe/v4/anime";
-  const options={
-    method:'GET'
+  const url = "https://api.jikan.moe/v4/anime";
+  const options = {
+    method: 'GET'
   }
 
-  try{
-    const response=await  fetch(url,options);
-    const result=response.json();
+  try {
+    const response = await fetch(url, options);
+    const result = response.json();
     return result;
-  }catch(error){
+  } catch (error) {
     console.error("Error while fetching anime data");
   }
 }
 
-export const animeDetail=async(id)=>{
-  const url=`https://api.jikan.moe/v4/anime/${id}/full`
-  const options={
-    method:"GET"
+export const animeDetail = async (id) => {
+
+  const url = `https://api.jikan.moe/v4/anime/${id}/full`
+  const options = {
+    method: "GET"
   }
 
-  try{
-    const response=await fetch(url,options)
-    const result=response.json()
+  try {
+    const response = await fetch(url, options)
+    const result = response.json()
     return result
-    }catch(error){
-      console.error("Cannot fetch details", error)
-    }
+  } catch (error) {
+    console.error("Cannot fetch details", error)
+  }
 }
 
 
